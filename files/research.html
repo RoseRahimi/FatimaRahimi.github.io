@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research &middot; Fatima Rose Rahimi</title>
+<meta name="description" content="Selected research with methods, metrics, and honest results, by Fatima Rose Rahimi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">Fatima Rose <b>Rahimi</b></a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="focus.html">Focus</a>
+      <a href="research.html" class="active">Research</a>
+      <a href="experience.html">Experience</a>
+      <a href="education.html">Education</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <a href="index.html" class="backlink">&larr; Home</a>
+      <div class="eyebrow">Research</div>
+      <h1>Results and findings.</h1>
+      <p class="lede">Selected work with methods, metrics, and the actual outcomes, including the ones that did not go as planned. I treat negative and unexpected results as findings worth reporting, not noise to hide.</p>
+    </div>
+  </section>
+
+  <!-- ============================ THESIS ============================ -->
+  <section>
+    <div class="wrap">
+      <div class="meta-line reveal">
+        <span class="org">Bard College</span> &middot; Senior Thesis &middot; Sep 2025 to Apr 2026 &middot; advisor recommended for journal submission
+      </div>
+      <h2 class="proj-title reveal">Distributional Forecasting with GANs</h2>
+      <p class="overview reveal">I asked whether borrowing TimeGAN's autoencoder structure and adding attention could improve a financial GAN's distributional forecasts of ETF excess log returns. The answer turned out to be no, and working out why was the part that mattered.</p>
+
+      <div class="reveal">
+        <div class="sub">Method</div>
+        <ul class="method">
+          <li><b>Architecture.</b> Extended FinGAN with TimeGAN's embedder and recovery network, plus attention over the latent context vector.</li>
+          <li><b>Training.</b> Two phases: autoencoder pre-training with Gradient Norm Matching, then adversarial fine-tuning under combined Sharpe and PnL losses.</li>
+          <li><b>Data.</b> Sharadar prices through ArcticDB, covering 28 equities across 9 sectors.</li>
+          <li><b>Benchmarks.</b> FinGAN, LSTM-Fin, ARIMA, and Ridge AR(10), evaluated on Sharpe, PnL, directional accuracy, and distributional metrics.</li>
+        </ul>
+      </div>
+
+      <div class="reveal">
+        <div class="sub">Key findings</div>
+        <div class="findings">
+          <p>The TimeGAN extension degraded out of sample performance against the FinGAN baseline rather than improving it. The added structure did not help on this data.</p>
+          <p>The reference FinGAN codebase held an implementation error that had inflated its reported Sharpe ratios. Catching and correcting it was necessary to compare against an honest baseline.</p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="sub">Results</div>
+        <!-- TODO Rose: replace each "TBD" with your real held-out numbers from the thesis. -->
+        <div class="table-wrap">
+          <table class="rtable">
+            <thead>
+              <tr><th>Model</th><th>Sharpe</th></tr>
+            </thead>
+            <tbody>
+              <tr class="baseline"><td class="model">FinGAN (corrected baseline)</td><td class="num tbd">+3.17</td></tr>
+              <tr><td class="model">This work (TimeGAN extension)</td><td class="num tbd">+1.083</td></tr>
+              <tr><td class="model">LSTM-Fin</td><td class="num tbd">+1.370</td></tr>
+              <tr><td class="model">ARIMA</td><td class="num tbd">+0.642</td></tr>
+              <tr><td class="model">Ridge AR(10)</td><td class="num tbd">+0.227</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Reported on held out data across 28 equities in 9 sectors.</p>
+
+        <figure class="figure">
+            <img src="/Users/fatimarahimi/Desktop/io/FatimaRahimi.github.io/files/vuletic57_five_models_test_sr.png" alt="Cumulative PnL by model">
+          <figcaption>Figure. Per ticker test Sharpe under each model's validation best loss combination, sorted by FinGAN Sharpe in descending order. The cross sectional pattern is preserved across all models; only the magnitude of extraction differs.</figcaption>
+        </figure>
+      </div>
+
+      <div class="pills reveal">
+        <span class="pill">TensorFlow / Keras</span><span class="pill">GANs</span><span class="pill">TimeGAN</span><span class="pill">ArcticDB</span><span class="pill">Time Series</span>
+      </div>
+      <div class="links-row reveal">
+        <a class="inline-link" href="https://github.com/RoseRahimi/FinTimeGAN-Pipeline" target="_blank" rel="noopener">github.com/RoseRahimi/FinTimeGAN-Pipeline &rarr;</a>
+        <span class="muted-link">Full thesis PDF available on request</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PCA ============================ -->
+  <section>
+    <div class="wrap">
+      <div class="meta-line reveal">
+        <span class="org">Independent Project</span> &middot; PCA-Based Risk Models for U.S. Equity Portfolio Construction
+      </div>
+      <h2 class="proj-title reveal">PCA as a Covariance Filter, Not a Labeler</h2>
+      <p class="overview reveal">I applied PCA and clustering to daily S&amp;P 500 returns from 2000 to 2026 to ask two things: does unsupervised clustering recover the GICS sector taxonomy, and does the resulting risk model beat standard baselines on a risk adjusted basis. The headline result was one the project prospectus did not predict. PCA wins, but as a covariance filter feeding a minimum variance optimizer, not as a cluster labeler.</p>
+
+      <div class="reveal">
+        <div class="sub">Method</div>
+        <ul class="method">
+          <li><b>Universe.</b> Survivorship bias free, point in time S&amp;P 500, roughly 1,099 historical members across 290 monthly rebalances, with prices from Sharadar stored in ArcticDB.</li>
+          <li><b>Residual panels.</b> Three input panels, raw returns, a CAPM market residual, and a sector beta residual, to separate market, sector, and idiosyncratic structure.</li>
+          <li><b>Walk forward PCA.</b> Refit each month on a trailing 252 day window, with the Marchenko-Pastur edge setting how many principal components count as real factors rather than noise.</li>
+          <li><b>Clustering and portfolios.</b> Compared k-means, Ward, average, and single linkage against GICS, then built and benchmarked nine portfolios, from naive cluster picks to minimum variance on a filtered covariance matrix.</li>
+        </ul>
+      </div>
+
+      <figure class="figure reveal">
+        <img src="/Users/fatimarahimi/Desktop/io/figures/pca-correlation-residualization.png" alt="Three correlation matrices side by side, showing mean off-diagonal correlation falling from 0.30 on raw returns to 0.09 after the market residual and 0.06 after the sector residual">
+        <figcaption>Figure 1. The residualization at work. Mean off diagonal correlation falls from 0.30 on raw returns to 0.09 once the market is stripped, leaving the GICS sector blocks visible, and to 0.06 once the sector is stripped, leaving mostly noise.</figcaption>
+      </figure>
+
+      <div class="reveal">
+        <div class="sub">Key findings</div>
+        <div class="findings">
+          <p>Clustering on market residualized returns partially recovered GICS sectors at an Adjusted Rand Index of 0.244, real but limited agreement reached with no information about company business lines. Stripping the sector signal too dropped agreement roughly fivefold, confirming the residualization did what it was designed to do.</p>
+          <p>The naive one stock per cluster portfolios underperformed every baseline, including plain equal weight. The winner was minimum variance on a Marchenko-Pastur filtered covariance matrix, at Sharpe 0.94 against 0.51 for equal weight, with the lowest drawdown of the set. PCA's real value here is as a covariance filter.</p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="sub">Results</div>
+        <div class="stat-grid">
+          <div class="stat"><div class="num">0.94</div><div class="lbl">Sharpe, Marchenko-Pastur filtered minimum variance</div></div>
+          <div class="stat"><div class="num">0.51</div><div class="lbl">Sharpe, equal weight baseline</div></div>
+          <div class="stat"><div class="num">-32%</div><div class="lbl">Max drawdown for the winner, against -87% for equal weight</div></div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:22px">
+          <table class="rtable">
+            <thead>
+              <tr><th>Portfolio</th><th>CAGR</th><th>Vol</th><th>Sharpe</th><th>Max DD</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="model">Best cluster portfolio</td><td class="num">+11.0%</td><td class="num">27.1%</td><td class="num">0.41</td><td class="num">-121%</td></tr>
+              <tr><td class="model">Equal weight S&amp;P 500</td><td class="num">+10.5%</td><td class="num">20.8%</td><td class="num">0.51</td><td class="num">-87%</td></tr>
+              <tr><td class="model">GICS stratified</td><td class="num">+10.8%</td><td class="num">20.6%</td><td class="num">0.53</td><td class="num">-84%</td></tr>
+              <tr><td class="model">HRP (Lopez de Prado)</td><td class="num">+10.3%</td><td class="num">16.7%</td><td class="num">0.61</td><td class="num">-66%</td></tr>
+              <tr><td class="model">MV, cluster filtered (Tola)</td><td class="num">+8.2%</td><td class="num">12.8%</td><td class="num">0.64</td><td class="num">-46%</td></tr>
+              <tr class="baseline"><td class="model">MV, RMT filtered (this work)</td><td class="num">+10.4%</td><td class="num">11.1%</td><td class="num">0.94</td><td class="num">-32%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Selected portfolios from the nine tested, monthly rebalance, 2002 to 2026.</p>
+
+        <figure class="figure">
+          <img src="/Users/fatimarahimi/Desktop/io/figures/pca-baseline-returns.png" alt="Cumulative log return and drawdown for the baseline portfolios from 2002 to 2026, with the RMT filtered minimum variance portfolio showing the shallowest drawdowns">
+          <figcaption>Figure 2. Cumulative return and drawdown across baselines. The RMT filtered minimum variance portfolio (green) matches the market on return while taking far shallower drawdowns through the 2008, 2020, and 2022 stress periods.</figcaption>
+        </figure>
+
+        <p class="overview" style="margin-top:24px">A crisis period check supports the same conclusion: the RMT filtered portfolio's predicted risk contributions tracked its realized losses more reliably than any baseline across both the 2020 and 2022 drawdowns. The number of real factors itself compresses during crises, falling from roughly 18 to as few as 11, which the walk forward pipeline captures directly.</p>
+
+        <figure class="figure">
+          <img src="/Users/fatimarahimi/Desktop/io/figures/pca-factor-count.png" alt="Number of statistically real principal components over time, dropping sharply during the 2008, 2020, and 2022 crisis periods">
+          <figcaption>Figure 3. How many real factors live in the data over time. The count drops during the 2008, 2020, and 2022 stress periods, the regime compression effect, with crisis markers shown.</figcaption>
+        </figure>
+      </div>
+
+      <div class="pills reveal">
+        <span class="pill">Python</span><span class="pill">NumPy</span><span class="pill">Pandas</span><span class="pill">scikit-learn</span><span class="pill">Random Matrix Theory</span><span class="pill">ArcticDB</span><span class="pill">Backtesting</span>
+      </div>
+      <div class="links-row reveal">
+        <a class="inline-link" href="https://github.com/RoseRahimi" target="_blank" rel="noopener">More on GitHub &rarr;</a>
+        <span class="muted-link">Full write up available on request</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ KNOT THEORY ============================ -->
+  <section>
+    <div class="wrap">
+      <div class="meta-line reveal">
+        <span class="org">Bard College &middot; ASCLab</span> &middot; Research Assistant &middot; Jun 2024 &ndash; Aug 2024
+      </div>
+      <h2 class="proj-title reveal">Algebraic Computation and Knot Theory</h2>
+      <p class="overview reveal">Co-developed a Prolog program to determine the decidability of the unification problem on right quasi terms, letting users input algebraic expressions and compute valid substitutions. Also contributed to classifying knots from the Tait-Rolfsen table by formulating algebraic colorings and exploring tractability.</p>
+      <div class="pills reveal">
+        <span class="pill">Prolog</span><span class="pill">Algebra</span><span class="pill">Theory</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="colophon">Fatima Rose Rahimi &middot; <a href="contact.html">Get in touch</a> &middot; built 2026</div>
+  </div>
+</footer>
+</body>
+</html>
